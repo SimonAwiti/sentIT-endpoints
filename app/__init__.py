@@ -10,4 +10,7 @@ def create_app(config):
     #app.config.from_object(configuration[config]) finish the configs
     app.secret_key = os.getenv("SECRET_KEY")
 
+    from app.version1.users.views import version1users_blueprints
+    app.register_blueprint(version1users_blueprints)
+
     return app
