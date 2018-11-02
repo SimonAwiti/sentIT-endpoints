@@ -43,7 +43,7 @@ def validate_data_login(data):
     """validate user details"""
     try:
         # check if the username is more than 3 characters
-        if len(data['username'].strip()) < 3:
+        if len(data['name'].strip()) < 3:
             return "username must be more than 3 characters"
         # check if password has spaces
         elif " " in data["password"]:
@@ -52,10 +52,10 @@ def validate_data_login(data):
         elif data["password"] == "":
             return "password required"
         # check if username has spaces
-        elif " " in data["username"]:
+        elif " " in data["name"]:
             return "username should be one word, no spaces"
         # check if username is empty
-        elif data["username"] == "":
+        elif data["name"] == "":
             return "username required"
         else:
             return "valid"

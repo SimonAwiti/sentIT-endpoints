@@ -65,5 +65,19 @@ class Users():
             "role" :  role
         }
         users.append(user_dict)
-        return {'msg':"Succesfully Registered, Log in to SendIT"}, 201
+        return {'msg':"Succesfully Registered, Log in to SendIT"}
+
+    def login(self, name, password):
+        """Logs in a user"""
+        name = request.json.get('name', None)
+        password = request.json.get('password', None)
+        
+        # Check for enpty inputs
+        if name == '' or password == '':
+            return {'error': 'Fields cannot be empty'}, 401
+
+        credentials = verify_credentials(name, password)
+        if not credentials:
+            return {'msg':'Error logging in, ensure username or password are correct'}, 401
+        return {'msg':'Log in succesful'}, 200
     
