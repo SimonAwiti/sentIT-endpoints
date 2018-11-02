@@ -5,7 +5,14 @@ bin-release/
 [Bb]in/
 
 # Other files and folders
+*.pyc
 .settings/
+.vscode/
+venv/
+__pycache__/
+.env
+*__pycache__
+.pytest_cache
 
 # Executables
 *.swf
