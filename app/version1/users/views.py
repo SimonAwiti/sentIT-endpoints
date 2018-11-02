@@ -1,4 +1,4 @@
-"""creating bp routes for products"""
+"""creating bp routes for users"""
 from flask import jsonify, Blueprint, request, make_response, session, redirect, url_for
 import datetime
 from app.version1.users.models import Users
@@ -24,12 +24,23 @@ def signup():
 
 @version1users_blueprints.route('/login', methods=['POST'])
 def login():
-    """ Method to login user """
+    """ Method to login regular user """
     data = request.get_json()
     response = validate_data_login(data)
     if response == "valid":
         name = data['name']
         password = data['password']
         response = userObject.login(name, password)
+    return jsonify({"message": response}), 401
+   
+@version1users_blueprints.route('/admin_login', methods=['POST'])
+def admin_login():
+    """ Method to login admin user """
+    data = request.get_json()
+    response = validate_data_login(data)
+    if response == "valid":
+        name = data['name']
+        password = data['password']
+        response = userObject.admin_login(name, password, password)
     return jsonify({"message": response}), 401
    

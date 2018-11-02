@@ -3,9 +3,18 @@
 from flask import request
 
 # List to hold all users
-users = []
+users = [
+    {
+        "id": 0,
+        "name" : "admin",
+        "email" : "admin@email",
+        "password" : "admin123",
+        "role" : "admin"
+    }
+]
 
 def generate_admin():
+    """creates my first admin"""
     users_dict = {
         "id": 0,
         "name" : "admin",
@@ -16,7 +25,7 @@ def generate_admin():
 
 def check_if_user_exists(item):
     """
-    Helper function to check if a user exists
+    Function to check if a user exists
     Returns True if user already exists, else returns False
     """
     user = [user for user in users if user['name'] == item.rstrip()]
@@ -26,10 +35,19 @@ def check_if_user_exists(item):
 
 def verify_credentials(name, password):
     """
-    Helper function to check if passwords match
+    Function to check if passwords match
     Returns True if user already exists, else returns False
     """
     user = [user for user in users if user['name'] == name and user['password'] == password]
+    if user:
+        return True
+    return False
+
+def is_admin(role):
+    """
+    Function to check if the user is and administrator
+    """
+    user = [user for user in users if user['role'] == "admin".rstrip]
     if user:
         return True
     return False
@@ -68,7 +86,7 @@ class Users():
         return {'msg':"Succesfully Registered, Log in to SendIT"}
 
     def login(self, name, password):
-        """Logs in a user"""
+        """Logs in a regular user"""
         name = request.json.get('name', None)
         password = request.json.get('password', None)
         
@@ -80,4 +98,21 @@ class Users():
         if not credentials:
             return {'msg':'Error logging in, ensure username or password are correct'}, 401
         return {'msg':'Log in succesful'}, 200
-    
+
+    def admin_login(self, name, role, password):
+        """Logs in administrator user"""
+        name = request.json.get('name', None)
+        password = request.json.get('password', None)
+        
+        # Check for enpty inputs
+        if name == '' or password == '':
+            return {'error': 'Fields cannot be empty'}, 401
+
+        credentials = verify_credentials(name, password)
+        if not credentials:
+            return {'msg':'Error logging in, ensure username or password are correct'}, 401
+
+        administrator = is_admin(role)
+        if not administrator:
+            return {'msg':'Administrator log in only'}, 401
+        return {'msg':'Log in succesful'}, 200
