@@ -47,7 +47,7 @@ def is_admin(role):
     """
     Function to check if the user is and administrator
     """
-    user = [user for user in users if user['role'] == "admin".rstrip]
+    user = [user for user in users if user['role'] == "admin"]
     if user:
         return True
     return False
@@ -116,3 +116,19 @@ class Users():
         if not administrator:
             return {'msg':'Administrator log in only'}, 401
         return {'msg':'Log in succesful'}, 200
+
+    def edit_user_role(self, user_id, role):
+        """Admin changes reguser role to admin"""
+        if not users:
+            return "No registered users"
+        if isinstance(user_id, int) is False:
+            return "User Id should be a number"
+        administrator = is_admin(role)
+        if not administrator:
+            return {'msg':'Only the admin can edit the role'}, 401
+        for user in range(len(users)):
+            if user_id != users[user]["user_id"]:
+                continue
+            user["role"] = "admin"
+            return "User was promoted to admin"
+            

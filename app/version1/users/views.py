@@ -10,7 +10,7 @@ version1users_blueprints = Blueprint('version1users', __name__, url_prefix='/api
 
 @version1users_blueprints.route('/register', methods=['POST'])
 def signup():
-    """Admin can add a new attendant"""
+    """user can get registered into the app"""
     data = request.get_json()
     response = validate_data_signup(data)
     name = data['name']
@@ -32,6 +32,7 @@ def login():
         password = data['password']
         response = userObject.login(name, password)
     return jsonify({"message": response}), 401
+    
    
 @version1users_blueprints.route('/admin_login', methods=['POST'])
 def admin_login():
@@ -43,4 +44,14 @@ def admin_login():
         password = data['password']
         response = userObject.admin_login(name, password, password)
     return jsonify({"message": response}), 401
+
+@version1users_blueprints.route('/register/<int:user_id>', methods=['PUT'])
+def add_admin():
+    """user can get registered into the app"""
+    data = request.get_json()
+    response = validate_data_signup(data)
+    role = data['role']
+    if response == "valid":
+        response = userObject.edit_user_role(role, role)
+    return jsonify({"message":response}), 201
    
