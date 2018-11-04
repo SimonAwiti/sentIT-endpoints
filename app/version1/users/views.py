@@ -47,7 +47,7 @@ def admin_login():
 
 @version1users_blueprints.route('/register/<int:user_id>', methods=['PUT'])
 def add_admin():
-    """user can get registered into the app"""
+    """admin can add another admin"""
     data = request.get_json()
     response = validate_data_signup(data)
     role = data['role']
