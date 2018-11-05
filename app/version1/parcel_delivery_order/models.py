@@ -28,7 +28,7 @@ class Parcels():
     """Class to handle  the creation of parcel orders"""
     def add_parcel_order(self, sender_name, descr, sent_from, \
                 quantity, price, recipient_name, destination, status):
-                    """Add an order to the parcel list"""
+                    """Add an order to the parcel delivery order list"""
                     # Get the JSON object values
                     sender_name = request.json.get('sender_name', None)
                     descr = request.json.get('descr', None)
@@ -83,4 +83,3 @@ class Parcels():
             return {'parcel order': parcel[0]}, 200
         # no parcel order found
         return {'msg':'Product not found'}, 401
-        
