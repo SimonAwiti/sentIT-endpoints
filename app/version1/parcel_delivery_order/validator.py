@@ -1,6 +1,6 @@
 
 def validate_parcel_data(data):
-    """validate parcel details"""
+    """validate parcel delivery orders details"""
     try:
         # check if description is empty
         if data["descr"] is False:
@@ -8,11 +8,11 @@ def validate_parcel_data(data):
         elif isinstance(data["descr"], int) is True:
             return "Description must be a string"
         elif data["quantity"] is False: 
-            return "product quantity required"
+            return "parcel quantity required"
         elif data["quantity"] == "":
-            return "product quantity is required"
+            return "parcel quantity is required"
         elif data["quantity"] < 5:
-            return "The minimum unit quantity of product must be above 5"
+            return "The minimum unit quantity of parcel must be above 5"
         elif isinstance(data["quantity"], int) is False:
             return "Quantity must be a number"
         elif data["price"] is False: 
