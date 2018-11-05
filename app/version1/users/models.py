@@ -47,7 +47,7 @@ class Users():
             return {'error': 'Fields cannot be empty'}, 401
 
         if password != confirm:
-            return {'msg':"Passwords do not match"}, 401
+            return {'msg':"Passwords do not match"}, 404
 
         duplicate = check_if_user_exists(name)
         if duplicate:
@@ -55,6 +55,9 @@ class Users():
         
         if role != "reg user":
             return {"msg":"you can only register as a regular user"}, 401
+
+        if len(password) < 6 or len(password) > 12:
+            return {'msg': "Password length should be between 6 and 12 characters long"}, 401
         
         user_dict = {
             "id": len(users) + 1,
@@ -64,7 +67,7 @@ class Users():
             "role" :  role
         }
         users.append(user_dict)
-        return {'msg':"Succesfully Registered, Log in to SendIT"}, 200
+        return {'msg':"Succesfully Registered, Log in to SendIT"}, 201
 
     def login(self, name, password):
         """Logs in a regular user"""
@@ -77,6 +80,6 @@ class Users():
 
         credentials = verify_credentials(name, password)
         if not credentials:
-            return {'msg':'Error logging in, ensure username or password are incorrect'}, 401
+            return {'msg':'Error logging in, ensure username or password are correct'}, 401
         return {'msg':'Log in succesful'}, 200
             

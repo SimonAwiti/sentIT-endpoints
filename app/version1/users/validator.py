@@ -19,11 +19,6 @@ def validate_data_signup(data):
         # check if Role is empty
         elif data["role"] == "":
             return "user Role required"
-        elif len(data['password'].strip()) < 5:
-            return "Password should have atleast 5 characters"
-        # check if the passwords match
-        elif data['password'] != data['confirm']:
-            return "passwords do not match"
         else:
             return "valid"
     except Exception as error:

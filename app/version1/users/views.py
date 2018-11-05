@@ -33,4 +33,4 @@ def login():
         name = data['name']
         password = data['password']
         response = userObject.login(name, password)
-    return jsonify({"message": response}), 401
+    return jsonify({"message": response}), 200
