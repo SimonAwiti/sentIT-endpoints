@@ -2,7 +2,7 @@ def validate_data_signup(data):
     """validate user details"""
     try:
         # check if password has spaces
-        elif " " in data["password"]:
+        if " " in data["password"]:
             return "password should be one word, no spaces"
         # check if password is empty
         elif data["password"] == "":
