@@ -50,7 +50,7 @@ class Parcels():
 
                     # ensure that status is sent
                     if status != "sent":
-                        return {'msg':'status, can only be "sent" when creating an order'}, 401
+                        return {'msg':'status, can only be sent when creating an order'}, 401
 
                     # Checks for numbers less than 0
                     size = check_if_numbers_are_negatives(quantity, price)
@@ -86,4 +86,4 @@ class Parcels():
         if parcel:
             return {'parcel order': parcel[0]}, 200
         # no parcel order found
-        return {'msg':'Product not found'}, 401
+        return {'msg':'Parcel not found'}, 401

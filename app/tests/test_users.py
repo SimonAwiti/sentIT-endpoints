@@ -83,8 +83,7 @@ class TestUsers(unittest.TestCase):
     def test_for_successful_login(self):
         """Tests if a user successfully logged in"""
         response = self.client().post('/api/v1/users/login', data=json.dumps(self.login), content_type='application/json')
-        #self.assertEqual(response.status_code, 200)
-        #self.assertEqual(resource.content_type, 'application/json')
+        self.assertEqual(response.status_code, 200)
     
     def test_wrong_credentials_supplied(self):
         """Tests if the wrong credentials were passed in"""

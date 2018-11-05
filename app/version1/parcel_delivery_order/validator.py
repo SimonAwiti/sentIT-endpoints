@@ -11,8 +11,6 @@ def validate_parcel_data(data):
             return "parcel quantity required"
         elif data["quantity"] == "":
             return "parcel quantity is required"
-        elif data["quantity"] < 5:
-            return "The minimum unit quantity of parcel must be above 5"
         elif isinstance(data["quantity"], int) is False:
             return "Quantity must be a number"
         elif data["price"] is False: 
