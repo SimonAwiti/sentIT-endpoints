@@ -32,7 +32,7 @@ class Parcels():
                     # Get the JSON object values
                     sender_name = request.json.get('sender_name', None)
                     descr = request.json.get('descr', None)
-                    sent_from = request.json.get('sant_from', None)
+                    sent_from = request.json.get('sent_from', None)
                     quantity = request.json.get('quantity', None)
                     price = request.json.get('price', None)
                     recipient_name = request.json.get('recipient_name', None)
@@ -54,16 +54,16 @@ class Parcels():
                         return {'msg':'Cannot supply a value less than 0'}, 401
         
                     # Add all values to a parcel delivery dictionary
-                    parcel_dict={
+                    parcel_dict = {
                         "order_id": len(parcels) + 1,
                         "sender_name" : sender_name.rstrip(),
-                        "descr" : descr.rstrip(),
-                        "sent_from" : sent_from.rstrip(),
+                        "descr" : descr,
+                        "sent_from" : sent_from,
                         "quantity" : quantity,
                         "price" : price,
-                        "recipient_name" : recipient_name.rstrip(),
-                        "destination" : destination.rstrip(),
-                        "status" : status.rstrip(),
+                        "recipient_name" : recipient_name,
+                        "destination" : destination,
+                        "status" : status
                     }
                     # Append to the parcel order ditalis to list
                     parcels.append(parcel_dict)
