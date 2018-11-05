@@ -1,5 +1,5 @@
 """creating bp routes for users"""
-from flask import jsonify, Blueprint, request, make_response
+from flask import jsonify, Blueprint, request
 import datetime
 from app.version1.users.models import Users
 from app.version1.users.validator import validate_data_signup, validate_data_login
@@ -34,4 +34,3 @@ def login():
         password = data['password']
         response = userObject.login(name, password)
     return jsonify({"message": response}), 401
-
