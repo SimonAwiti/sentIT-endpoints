@@ -49,15 +49,12 @@ class Users():
         if password != confirm:
             return {'msg':"Passwords do not match"}, 401
 
-        if len(password) < 6 or len(password) > 12:
-            return {'msg': "Password length should be between 6 and 12 characters long"}, 401
-
         duplicate = check_if_user_exists(name)
         if duplicate:
             return {'msg':'User already exists'}, 401
         
         if role != "reg user":
-            return {"msg":"you can only register as a regular user"}
+            return {"msg":"you can only register as a regular user"}, 401
         
         user_dict = {
             "id": len(users) + 1,
@@ -67,7 +64,7 @@ class Users():
             "role" :  role
         }
         users.append(user_dict)
-        return {'msg':"Succesfully Registered, Log in to SendIT"}
+        return {'msg':"Succesfully Registered, Log in to SendIT"}, 200
 
     def login(self, name, password):
         """Logs in a regular user"""

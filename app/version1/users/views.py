@@ -1,5 +1,5 @@
 """creating bp routes for users"""
-from flask import jsonify, Blueprint, request, make_response, session, redirect, url_for
+from flask import jsonify, Blueprint, request, make_response
 import datetime
 from app.version1.users.models import Users
 from app.version1.users.validator import validate_data_signup, validate_data_login
@@ -26,7 +26,7 @@ def signup():
     
 @version1users_blueprints.route('/login', methods=['POST'])
 def login():
-    """ Method to login regular user """
+    """ Method to login all users """
     data = request.get_json()
     response = validate_data_login(data)
     if response == "valid":
