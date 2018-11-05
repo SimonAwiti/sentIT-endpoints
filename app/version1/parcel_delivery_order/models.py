@@ -48,6 +48,10 @@ class Parcels():
                     if present:
                         return {'msg':'Parcel order delivery already exists'}, 401
 
+                    # ensure that status is sent
+                    if status != "sent":
+                        return {'msg':'status, can only be "sent" when creating an order'}, 401
+
                     # Checks for numbers less than 0
                     size = check_if_numbers_are_negatives(quantity, price)
                     if size:
@@ -73,8 +77,8 @@ class Parcels():
         """Fetch all parcels delivery orders from the list"""
         # If parcel list is empty
         if len(parcels) == 0:
-            return {'msg':'No parcel delivery order added yet'}, 200
-        return {'parcel orders':parcels}, 
+            return {'msg':'No parcel delivery order added yet'}, 401
+        return {'parcel orders':parcels}, 200
     
     def get_one_parcel(self, order_id):
         """Fetches a specific parcel order from the percel delivery order list"""
