@@ -1,9 +1,6 @@
 def validate_data_signup(data):
     """validate user details"""
     try:
-        # check if the username is more than 3 characters
-        if len(data['name'].strip()) < 3:
-            return "username must be more than 3 characters"
         # check if password has spaces
         elif " " in data["password"]:
             return "password should be one word, no spaces"
