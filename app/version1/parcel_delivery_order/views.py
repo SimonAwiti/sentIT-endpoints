@@ -30,3 +30,9 @@ def product():
         return jsonify({"message":response}), 201
     data = ParcelObject.get_all_parcels()
     return jsonify({"message":data}), 201
+
+@version1parcels_bp.route('/<int:order_id>', methods=['GET'])
+def get_parcel_by_id(order_id):
+    """getting a parcel delivery record by the ID"""
+    data = ParcelObject.get_one_parcel(order_id)
+    return jsonify({"message":data}), 201
