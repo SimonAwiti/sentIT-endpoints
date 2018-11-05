@@ -22,9 +22,6 @@ def validate_data_signup(data):
         # check if email empty
         elif data["email"] == "":
             return "email required"
-        # check if user Role has spaces
-        elif " " in data["role"]:
-            return "user role should be one word, no spaces"
         # check if Role is empty
         elif data["role"] == "":
             return "user Role required"

@@ -8,6 +8,8 @@ userObject = Users()
 
 version1users_blueprints = Blueprint('version1users', __name__, url_prefix='/api/v1/users')
 
+
+
 @version1users_blueprints.route('/register', methods=['POST'])
 def signup():
     """user can get registered into the app"""
@@ -21,7 +23,7 @@ def signup():
     if response == "valid":
         response = userObject.add_user(name, email, password, confirm, role)
     return jsonify({"message":response}), 201
-
+    
 @version1users_blueprints.route('/login', methods=['POST'])
 def login():
     """ Method to login regular user """
@@ -32,26 +34,4 @@ def login():
         password = data['password']
         response = userObject.login(name, password)
     return jsonify({"message": response}), 401
-    
-   
-@version1users_blueprints.route('/admin_login', methods=['POST'])
-def admin_login():
-    """ Method to login admin user """
-    data = request.get_json()
-    response = validate_data_login(data)
-    if response == "valid":
-        name = data['name']
-        password = data['password']
-        response = userObject.admin_login(name, password, password)
-    return jsonify({"message": response}), 401
 
-@version1users_blueprints.route('/register/<int:user_id>', methods=['PUT'])
-def add_admin():
-    """admin can add another admin"""
-    data = request.get_json()
-    response = validate_data_signup(data)
-    role = data['role']
-    if response == "valid":
-        response = userObject.edit_user_role(role, role)
-    return jsonify({"message":response}), 201
-   
