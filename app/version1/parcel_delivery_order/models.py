@@ -2,6 +2,8 @@
 
 from flask import request, jsonify
 
+from app.version1.parcel_status.models import ParcelStatus
+
 # List to hold all parcel delivery orders
 parcels = []
 
@@ -23,6 +25,12 @@ def check_if_numbers_are_negatives(quantity, price):
     if quantity < 0 or price < 0 :
         return True
     return False
+
+def check_if_admin_changed_status(status):
+    """
+    Helper function to check if the admin has already changed the status of a parcel order
+    Returns True if the admmin has already edited
+    """
 
 class Parcels():
     """Class to handle  the creation of parcel orders"""
