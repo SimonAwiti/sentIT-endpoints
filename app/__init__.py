@@ -16,7 +16,7 @@ def create_app(config):
     from app.version1.parcel_delivery_order.views import version1parcels_bp
     app.register_blueprint(version1parcels_bp)
 
-    from app.version1.parcel_status.views import version1pstatus_bp
-    app.register_blueprint(version1pstatus_bp)
+    #from app.version1.parcel_status.views import version1pstatus_bp
+    #app.register_blueprint(version1pstatus_bp)
     
     return app
