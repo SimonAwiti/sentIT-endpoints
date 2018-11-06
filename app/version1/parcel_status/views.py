@@ -22,7 +22,7 @@ def get_all_parcels_orders_by_client():
 
 @version1pstatus_bp.route('/<int:order_id>', methods=['PUT'])
 def edit_parcel_by_client(order_id):
-    """change the status of the parcel"""
+    """change the status of the parcel delivery record"""
     data = request.get_json()
     status = data['status']
     response = ParcelObject.update_parcel_order(order_id, status)
