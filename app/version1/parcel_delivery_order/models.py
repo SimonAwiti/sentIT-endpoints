@@ -2,9 +2,6 @@
 
 from flask import request, jsonify
 
-from app.version1.parcel_status.models import ParcelStatus
-
-# List to hold all parcel delivery orders
 parcels = []
 
 def check_if_parcel_exists(item):
@@ -25,12 +22,6 @@ def check_if_numbers_are_negatives(quantity, price):
     if quantity < 0 or price < 0 :
         return True
     return False
-
-def check_if_admin_changed_status(status):
-    """
-    Helper function to check if the admin has already changed the status of a parcel order
-    Returns True if the admmin has already edited
-    """
 
 class Parcels():
     """Class to handle  the creation of parcel orders"""
@@ -64,10 +55,12 @@ class Parcels():
                     size = check_if_numbers_are_negatives(quantity, price)
                     if size:
                         return {'msg':'Cannot supply a value less than 0'}, 401
+
         
                     # Add all values to a parcel delivery dictionary
                     parcel_dict = {
                         "order_id": len(parcels) + 1,
+                        "sender_id": len(parcels) + 1,
                         "sender_name" : sender_name.rstrip(),
                         "descr" : descr,
                         "sent_from" : sent_from,
@@ -95,3 +88,29 @@ class Parcels():
             return {'parcel order': parcel[0]}, 200
         # no parcel order found
         return {'msg':'Parcel not found'}, 401
+
+    def update_parcel(self, order_id, sender_name, descr, sent_from, \
+                quantity, price, recipient_name, destination, status):
+        """ update parcel delivery order """
+        if status != "canceled":
+            return jsonify ({'msg':'You can only change the status to canceled'}), 401
+
+        for parcel in parcels:
+            if parcel['order_id'] == order_id:
+                if parcel['status'] != "delivered" and parcel['status'] != "on-transit":
+                    parcel['sender_name'] = sender_name
+                    parcel['descr'] = descr
+                    parcel['sent_from'] = sender_name
+                    parcel['quantity'] = quantity
+                    parcel['price'] = price
+                    parcel['recipient_name'] = recipient_name
+                    parcel['destination'] = destination
+                    parcel['status'] = status
+                    return jsonify({
+                        "message": "Update Successful.",
+                        "Product": parcels}), 201
+                return jsonify({
+                    'msg':'Canceling error! Order is being transported or already deliverd'}), 401        
+        return jsonify({
+                "message": "No parcel delivery order with that id."}), 404
+ 

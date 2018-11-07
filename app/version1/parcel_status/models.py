@@ -2,10 +2,9 @@
 from flask import request, jsonify
 
 #local import 
-from app.version1.parcel_delivery_order.models import parcels, check_if_parcel_exists
+from app.version1.parcel_delivery_order.models import parcels
+from app.version1.parcel_delivery_order.models import check_if_parcel_exists
 
-"""list of all the parcel delivery orders by clients"""
-client_parcels = parcels
 
 def check_if_parcel_order_exist(item):
     """
@@ -16,6 +15,22 @@ def check_if_parcel_order_exist(item):
     if parcels is True:
         True
     return False
+
+def updated_status(order_id, status):
+    """ checks if a parcel delivery order is updated succesfully, returns true if yes """
+    if  status == '':
+        return jsonify({
+        "message": "Field cannot be empty"}), 401
+
+    if status != "delivered" and status != "on-transit":
+        return jsonify({
+        "message": "status, can only be edited to on-transit or delivered"}), 401
+
+    for parcel in parcels:
+        if parcel['order_id'] == order_id:
+            parcel['status'] = status
+            return True
+        return False
 
 class ParcelStatus():
     """handles all the operations by the admin in editing the status and getting the parcels orders"""
@@ -48,10 +63,13 @@ class ParcelStatus():
             "message": "status, can only be edited to on-transit or delivered"}), 401
 
         for parcel in parcels:
-            if parcel['order_id'] == order_id:
-                parcel['status'] = status
-                return jsonify({
-                    "message": "Update Successful.",
-                    "Parcel order": parcel}), 201
+            if parcel['status'] != "canceled":
+                if parcel['order_id'] == order_id:
+                    parcel['status'] = status
+                    return jsonify({
+                        "message": "Update Successful.",
+                        "Parcel order": parcel}), 201
+            return jsonify({
+                    'msg':'You cannot edit a canceled delivery order'}), 401                           
         return jsonify({
             "message": "No parcel order with that id."}), 404
