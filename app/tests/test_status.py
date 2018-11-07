@@ -40,7 +40,7 @@ class TestParcelsStatus(unittest.TestCase):
         self.assertIn('1', str(result.data)) 
 
     def test_to_get_all_parcels(self):
-        """Test to get all parcel delivery orders"""
+        """Test to get all parcel delivery orders by clients"""
         response = self.client().get('/api/v1/admin_parcels/')
         self.assertEqual(response.status_code, 201)  
 
