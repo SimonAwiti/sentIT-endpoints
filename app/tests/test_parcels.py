@@ -50,6 +50,26 @@ class TestParcels(unittest.TestCase):
             "destination":"Nakuru",
             "status":"delivered"
         }
+        self.parcel_5 = {
+            "sender_name":"",
+            "descr":"",
+            "sent_from":"",
+            "quantity":"",
+            "price":"",
+            "recipient_name":"",
+            "destination":"",
+            "status":""
+        }
+        self.parcel_6 = {
+            "sender_name":"Joseph",
+            "descr":"nails",
+            "sent_from":"Nairobi",
+            "quantity":4,
+            "price":50,
+            "recipient_name":"Otile",
+            "destination":"Nakuru",
+            "status":"repeated"
+        }
 
     def test_add_parcel_order(self):
         """Tests for adding a new parcel delivery order"""
@@ -60,7 +80,7 @@ class TestParcels(unittest.TestCase):
     def test_if_parcel_exists(self):
         """Tests if a parcel delivery order already exists"""
         response = self.client().post('/api/v1/parcels/', data=json.dumps(self.parcel_2), content_type='application/json')
-        #self.assertEqual(response.status_code, 401)
+        #self.assertEqual(response.status_code, 400)
         self.assertIn("Parcel order delivery already exists", str(response.data))
     
     def test_if_arguemnt_has_negative_values(self):
@@ -78,7 +98,7 @@ class TestParcels(unittest.TestCase):
     def test_to_get_all_parcels(self):
         """Test to get all parcel delivery orders"""
         response = self.client().get('/api/v1/parcels/')
-        #self.assertEqual(response.status_code, 200)
+        #self.assertEqual(response.status_code, 201)
     
     def test_for_fetching_a_specific_parcel_order(self):
         """Test to successfully fetch a specific parcel order"""
@@ -91,3 +111,35 @@ class TestParcels(unittest.TestCase):
         response = self.client().get('/api/v1/parcels/1000')
         #self.assertEqual(response.status_code, 404)
         self.assertIn("Parcel not found", str(response.data))
+
+    def test_for_posting_empty_fields(self):
+        """tests if the user is trying to post with an empty field"""
+        response = self.client().post('/api/v1/parcels/', data=json.dumps(self.parcel_5), content_type='application/json')
+        self.assertIn("Quantity must be a number", str(response.data))
+
+    def test_change_an_order_parcel(self):
+        """Test for changing a delivery order"""
+        response = self.client().post('/api/v1/parcels/', data=json.dumps(self.parcel), content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        response = self.client().put('/api/v1/parcels/1', data=json.dumps(self.parcel_3), content_type='application/json')
+        result = self.client().get('/api/v1/parcels/1')
+        #self.assertEqual(response.status_code, 200)
+        #self.assertIn('reams', str(result.data)) 
+
+    def test_change_an_order_parcel_wrong_status(self):
+        """Test for changing a delivery order with wrong status"""
+        response = self.client().post('/api/v1/parcels/', data=json.dumps(self.parcel), content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        response = self.client().put('/api/v1/parcels/1', data=json.dumps(self.parcel_6), content_type='application/json')
+        result = self.client().get('/api/v1/parcels/1')
+        #self.assertEqual(response.status_code, 200)
+        #self.assertIn('reams', str(result.data)) 
+        #self.assertIn("You can only change the status to canceled", str(response.data))
+
+    def test_change_an_order_parcel_wrong_id(self):
+        """Test for changing a delivery order with wrong id"""
+        response = self.client().post('/api/v1/parcels/', data=json.dumps(self.parcel), content_type='application/json')
+        self.assertEqual(response.status_code, 201)
+        response = self.client().put('/api/v1/parcels/1000', data=json.dumps(self.parcel_6), content_type='application/json')
+        result = self.client().get('/api/v1/parcels/1')
+        #self.assertIn("No parcel delivery order with that id.", str(response.data))
