@@ -5,7 +5,7 @@ import json
 from app import create_app
 
 class TestParcelsStatus(unittest.TestCase):
-    """Class containing all tests for the parcel resource"""
+    """Class containing all tests for the parcel delivery resource"""
     def setUp(self):
         self.app = create_app('testing')
         self.app.config['Testing'] = True
