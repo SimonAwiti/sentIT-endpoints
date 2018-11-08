@@ -30,20 +30,27 @@ def product():
         return jsonify({"message":response}), 201
     data = ParcelObject.get_all_parcels()
     return jsonify({"message":data}), 201
-    
-@version1parcels_bp.route('/<int:order_id>', methods=['PUT'])
+
+@version1parcels_bp.route('/<int:order_id>', methods=['GET', 'PUT'])
 def cancel_order(order_id):
-    """method to edit an order by the user"""
-    data = request.get_json()
-    sender_name = data['sender_name']
-    descr = data['descr']
-    sent_from = data['sent_from']
-    quantity = data['quantity']
-    price = data['price']
-    recipient_name = data['recipient_name']
-    destination = data['destination']
-    status = data['status']
-    response = ParcelObject.update_parcel(order_id,
-        sender_name, descr, sent_from, quantity, \
-        price, recipient_name, destination, status)
-    return response
+    """method to get and edit an order by the user"""
+    if request.method == "PUT":
+        data = request.get_json()
+        response = validate_parcel_data(data)
+        if response == "valid":
+            sender_name = data['sender_name']
+            descr = data['descr']
+            sent_from = data['sent_from']
+            quantity = data['quantity']
+            price = data['price']
+            recipient_name = data['recipient_name']
+            destination = data['destination']
+            status = data['status']
+
+            response = ParcelObject.update_parcel(order_id,
+                sender_name, descr, sent_from, quantity, \
+                price, recipient_name, destination, status)
+        return response
+    data = ParcelObject.get_one_parcel(order_id)
+    return data
+
