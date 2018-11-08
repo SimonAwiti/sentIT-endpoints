@@ -19,12 +19,14 @@ def check_if_parcel_order_exist(item):
 def updated_status(order_id, status):
     """ checks if a parcel delivery order is updated succesfully, returns true if yes """
     if  status == '':
-        return jsonify({
-        "message": "Field cannot be empty"}), 401
+        return {
+        "message": "Field cannot be empty"
+        }, 401
 
     if status != "delivered" and status != "on-transit":
-        return jsonify({
-        "message": "status, can only be edited to on-transit or delivered"}), 401
+        return {
+        "message": "status, can only be edited to on-transit or delivered"
+        }, 401
 
     for parcel in parcels:
         if parcel['order_id'] == order_id:
@@ -41,26 +43,29 @@ class ParcelStatus():
             return {'msg':'No parcel delivery order added yet'}, 401
         return {'parcel orders':parcels}, 200
 
-    def get_parcel_by_user(self, sender_name):
+    def get_parcel_by_user(self, sender_id):
         """ Fetch sales rec by a certain sender """
         for parcel in parcels:
-            if parcel['sender_name'] == sender_name:
+            if parcel['sender_id'] == sender_id:
                 return jsonify({
                     "message": "Successful.",
                     "sales record": parcel}), 200
         return jsonify({
-                "message": "No parcel record by that sender."}), 404
+                "message": "No parcel record by that sender."
+                }), 404
 
     def update_parcel_order(
         self, order_id, status):
         """ update status of the parcel order """
         if  status == '':
-            return jsonify({
-            "message": "Field cannot be empty"}), 401
+            return {
+            "message": "Field cannot be empty"
+            }, 401
 
         if status != "delivered" and status != "on-transit":
-            return jsonify({
-            "message": "status, can only be edited to on-transit or delivered"}), 401
+            return {
+            "message": "status, can only be edited to on-transit or delivered"
+            }, 401
 
         for parcel in parcels:
             if parcel['status'] != "canceled":
@@ -69,7 +74,9 @@ class ParcelStatus():
                     return jsonify({
                         "message": "Update Successful.",
                         "Parcel order": parcel}), 201
-            return jsonify({
-                    'msg':'You cannot edit a canceled delivery order'}), 401                           
-        return jsonify({
-            "message": "No parcel order with that id."}), 404
+            return {
+                   "message": "You cannot edit a canceled delivery order"
+                    }, 401                           
+        return {
+            "message": "No parcel order with that id."
+            }, 404
