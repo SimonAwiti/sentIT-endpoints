@@ -17,7 +17,7 @@
 | GET /parcel order             | Get all available orders         |  /api/v1/orders/              |
 | GET /parcel order/<orderId>   | Fetch a single order details     |  /api/v1/orders/<orderid>     |
 | Edit /parcel order/<orderId>  | Changin the details of the order |  /api/v1/orders/<orderid>     |
-| Delete /parcel order/<orderId>| Delete a single parcel order     |  /api/v1/orders/<orderid>     |
+| PUT /parcel order/<orderId>   | Cancel a single parcel order     |  /api/v1/orders/<orderid>     |
 | POST /parcel order            | Create a parcel order            |  /api/v1/orders/              |
 | POST /users                   | User log in                      |  /api/v1/users/login          |
 | POST /users                   | User registration                |  /api/v1/users/register       |
