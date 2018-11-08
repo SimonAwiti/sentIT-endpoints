@@ -7,7 +7,7 @@ parcels = []
 def check_if_parcel_exists(item):
     """
     Helper function to check if a parcel delivery order exists
-    Returns True if parcel already exists, else returns False
+    Returns True if parcel delivery order already exists, else returns False
     """
     parcel = [parcel for parcel in parcels if parcel['descr'] == item.rstrip()]
     if parcel:
