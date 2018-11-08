@@ -1,5 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Coverage Status](https://coveralls.io/repos/github/SimonAwiti/sentIT-endpoints/badge.svg)](https://coveralls.io/github/SimonAwiti/sentIT-endpoints)
+[![Build Status](https://travis-ci.org/SimonAwiti/sentIT-endpoints.svg?branch=ch-host-app-161705581)](https://travis-ci.org/SimonAwiti/sentIT-endpoints)
 # sentIT Application
 # sentIT application endpoints
 
