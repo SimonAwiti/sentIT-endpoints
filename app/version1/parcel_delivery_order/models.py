@@ -79,21 +79,21 @@ class Parcels():
         # If parcel list is empty
         if len(parcels) == 0:
             return {'msg':'No parcel delivery order added yet'}, 401
-        return {'parcel orders':parcels}, 200
+        return jsonify({'parcel orders':parcels}), 200
     
     def get_one_parcel(self, order_id):
         """Fetches a specific parcel order from the percel delivery order list"""
         parcel = [parcel for parcel in parcels if parcel['order_id'] == order_id]
         if parcel:
-            return {'parcel order': parcel[0]}, 200
+            return jsonify({'parcel order': parcel}), 200
         # no parcel order found
-        return {'msg':'Parcel not found'}, 401
+        return jsonify({'msg':'Parcel not found'}), 401
 
     def update_parcel(self, order_id, sender_name, descr, sent_from, \
                 quantity, price, recipient_name, destination, status):
         """ update parcel delivery order """
         if status != "canceled":
-            return jsonify ({'msg':'You can only change the status to canceled'}), 401
+            return {'msg':'You can only change the status to canceled'}, 401
 
         for parcel in parcels:
             if parcel['order_id'] == order_id:
