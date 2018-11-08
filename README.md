@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Coverage Status](https://coveralls.io/repos/github/SimonAwiti/sentIT-endpoints/badge.svg?branch=ch-failing-tests-161734725)](https://coveralls.io/github/SimonAwiti/sentIT-endpoints?branch=ch-failing-tests-161734725)
+[![Coverage Status](https://coveralls.io/repos/github/SimonAwiti/sentIT-endpoints/badge.svg)](https://coveralls.io/github/SimonAwiti/sentIT-endpoints)
 # sentIT Application
 # sentIT application endpoints
 
