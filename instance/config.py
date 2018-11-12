@@ -1,21 +1,30 @@
 import os
-from os import getenv
+
 
 """Application configuration"""
-# system import
-class Config:
+
+class Config(object):
     """Base config class"""
     DEBUG = True
     SECRET = os.getenv("SECRET_KEY")
-class Development(Config):
+
+class DevelopmentConfig(Config):
     """Development configurations"""
     DEBUG = True
-class Testing(Config):
+
+class TestingConfig(Config):
     """Testing configurations"""
     DEBUG = True
     TESTING = True
     SECRET_KEY = "SECRET"
-configuration = {
-    "development": Development,
-    "testing": Testing
-}
+
+class ProductionConfig(Config):
+    """Configurations for Production."""
+    DEBUG = False
+    TESTING = False
+
+class StagingConfig(Config):
+    """Configurations for Staging."""
+    DEBUG = True
+
+

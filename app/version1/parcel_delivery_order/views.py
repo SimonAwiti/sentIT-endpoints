@@ -29,7 +29,7 @@ def product():
                 price, recipient_name, destination, status)
         return jsonify({"message":response}), 201
     data = ParcelObject.get_all_parcels()
-    return jsonify({"message":data}), 201
+    return jsonify(data), 201
 
 @version1parcels_bp.route('/<int:order_id>', methods=['GET', 'PUT'])
 def cancel_order(order_id):

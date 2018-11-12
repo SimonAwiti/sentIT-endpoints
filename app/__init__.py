@@ -1,14 +1,15 @@
 '''Creating app initializer'''
 import os
 from flask import Flask
-from instance.config import configuration
+from instance.config import app_config
 
-def create_app(config):
+def create_app(config_name):
     '''creating  the app'''
  
     app = Flask(__name__, instance_relative_config=True)
-    #app.config.from_object(configuration[config]) finish the configs
-    app.secret_key = os.getenv("SECRET_KEY")
+    app.config.from_object(app_config[config_name])
+    app.config.from_pyfile('config.py')
+    #app.secret_key = os.getenv("SECRET_KEY")
 
     from app.version1.users.views import version1users_blueprints
     app.register_blueprint(version1users_blueprints)

@@ -79,7 +79,7 @@ class Parcels():
         # If parcel list is empty
         if len(parcels) == 0:
             return {'msg':'No parcel delivery order added yet'}, 401
-        return jsonify({'parcel orders':parcels}), 200
+        return parcels
     
     def get_one_parcel(self, order_id):
         """Fetches a specific parcel order from the percel delivery order list"""

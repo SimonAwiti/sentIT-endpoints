@@ -41,7 +41,7 @@ class ParcelStatus():
         # If parcel list is empty
         if len(parcels) == 0:
             return {'msg':'No parcel delivery order added yet'}, 401
-        return {'parcel orders':parcels}, 200
+        return jsonify({'parcel orders':parcels}), 200
 
     def get_parcel_by_user(self, sender_id):
         """ Fetch sales rec by a certain sender """
