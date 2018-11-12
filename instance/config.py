@@ -27,4 +27,9 @@ class StagingConfig(Config):
     """Configurations for Staging."""
     DEBUG = True
 
-
+app_config = {
+    'development': DevelopmentConfig,
+    'testing': TestingConfig,
+    'staging': StagingConfig,
+    'production': ProductionConfig,
+}
