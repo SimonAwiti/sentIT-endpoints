@@ -1,6 +1,7 @@
 """handles all operations for creating and fetching data relating to users"""
 
 from flask import request
+from flask_jwt_extended import create_access_token
 
 # List to hold all users
 users = [
@@ -69,10 +70,11 @@ class Users():
         users.append(user_dict)
         return {'msg':"Succesfully Registered, Log in to SendIT"}, 201
 
-    def login(self, name, password):
+    def login(self, name, password, role):
         """Logs in a regular user"""
         name = request.json.get('name', None)
         password = request.json.get('password', None)
+        role = request.json.get('role', None)
         
         # Check for enpty inputs
         if name == '' or password == '':
@@ -81,5 +83,8 @@ class Users():
         credentials = verify_credentials(name, password)
         if not credentials:
             return {'msg':'Error logging in, ensure username or password are correct'}, 401
-        return {'msg':'Log in succesful'}, 200
-            
+    
+        user = [user for user in users if user['name'] == name.rstrip()]
+        access_token = create_access_token(identity={'name':user[0]['name'], 'id':user[0]['id'], 'role':user[0]['role']})
+
+        return {'msg':access_token}, 200

@@ -32,5 +32,6 @@ def login():
     if response == "valid":
         name = data['name']
         password = data['password']
-        response = userObject.login(name, password)
+        role = data['role']
+        response = userObject.login(name, password, role)
     return jsonify({"message": response}), 200
